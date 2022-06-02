@@ -1,13 +1,230 @@
 [
+{
+  "type": "group",
+  "name": "floor1",
+  "label": "Floor 1",
+  "expanded": false,
+  "children": [
+    {
+      "type": "text",
+      "name": "heading",
+      "label": "Heading",
+      "required": false
+    },
+    {
+      "name": "map_image",
+      "label": "Map Image",
+      "required": false,
+      "responsive": true,
+      "resizeable": false,
+      "type": "image"
+    },
+    {
+      "type": "group",
+      "name": "pins",
+      "label": "Pins",
+      "occurrence": {
+        "min" : 1,
+        "max" : null
+      },
+      "children": [
+        {
+          "type": "text",
+          "name": "popup_title",
+          "label": "Popup Title",
+          "required": false,
+          "locked" : false
+        },
+        {
+          "type": "richtext",
+          "name": "popup_content",
+          "label": "Popup Content",
+          "required": false,
+          "locked": false
+        },
+        {
+          "name": "pin_color",
+          "type": "choice",
+          "label": "Pin Color",
+          "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
+          "required": true
+        },
+        {
+          "type": "group",
+          "name": "pin_position",
+          "label": "Pin Position",
+          "expanded": true,
+          "children": [
+            {
+              "type": "number",
+              "name": "x_pos",
+              "label": "X Position",
+              "min": 0,
+              "max": null
+            },
+            {
+              "type": "number",
+              "name": "y_pos",
+              "label" : "Y Position",
+              "min": 0,
+              "max": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
   {
-    "default": 0,
-    "min": 0,
-    "max": 100,
-    "display": "slider",
-    "label": "Starting number of reasons",
-    "locked": false,
-    "name": "initial_count",
-    "required": false,
-    "type": "number"
+    "type": "group",
+    "name": "floor2",
+    "label": "Floor 2",
+    "expanded": false,
+    "children": [
+      {
+        "type": "text",
+        "name": "heading",
+        "label": "Heading",
+        "required": false
+      },
+      {
+        "name": "map_image",
+        "label": "Map Image",
+        "required": false,
+        "responsive": true,
+        "resizeable": false,
+        "type": "image"
+      },
+      {
+        "type": "group",
+        "name": "pins",
+        "label": "Pins",
+        "occurrence": {
+          "min" : 1,
+          "max" : null
+        },
+        "children": [
+          {
+            "type": "text",
+            "name": "popup_title",
+            "label": "Popup Title",
+            "required": false,
+            "locked" : false
+          },
+          {
+            "type": "richtext",
+            "name": "popup_content",
+            "label": "Popup Content",
+            "required": false,
+            "locked": false
+          },
+          {
+            "name": "pin_color",
+            "type": "choice",
+            "label": "Pin Color",
+            "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
+            "required": true
+          },
+          {
+            "type": "group",
+            "name": "pin_position",
+            "label": "Pin Position",
+            "expanded": true,
+            "children": [
+              {
+                "type": "number",
+                "name": "x_pos",
+                "label": "X Position",
+                "min": 0,
+                "max": null
+              },
+              {
+                "type": "number",
+                "name": "y_pos",
+                "label" : "Y Position",
+                "min": 0,
+                "max": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "name": "floor3",
+    "label": "Floor 3",
+    "expanded": false,
+    "children": [
+      {
+        "type": "text",
+        "name": "heading",
+        "label": "Heading",
+        "required": false
+      },
+      {
+        "name": "map_image",
+        "label": "Map Image",
+        "required": false,
+        "responsive": true,
+        "resizeable": false,
+        "type": "image"
+      },
+      {
+        "type": "group",
+        "name": "pins",
+        "label": "Pins",
+        "occurrence": {
+          "min" : 1,
+          "max" : null
+        },
+        "children": [
+          {
+            "type": "text",
+            "name": "popup_title",
+            "label": "Popup Title",
+            "required": false,
+            "locked" : false
+          },
+          {
+            "type": "richtext",
+            "name": "popup_content",
+            "label": "Popup Content",
+            "required": false,
+            "locked": false
+          },
+          {
+            "name": "pin_color",
+            "type": "choice",
+            "label": "Pin Color",
+            "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
+            "required": true
+          },
+          {
+            "type": "group",
+            "name": "pin_position",
+            "label": "Pin Position",
+            "expanded": true,
+            "children": [
+              {
+                "type": "number",
+                "name": "x_pos",
+                "label": "X Position",
+                "min": 0,
+                "max": null
+              },
+              {
+                "type": "number",
+                "name": "y_pos",
+                "label" : "Y Position",
+                "min": 0,
+                "max": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]

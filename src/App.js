@@ -1,97 +1,112 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, Suspense} from 'react';
 import './App.scss';
-import * as THREE from 'three';
-import {TrackballControls} from "three/examples/jsm/controls/TrackballControls";
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import {Canvas, useFrame, useLoader} from '@react-three/fiber'
+import {TextureLoader} from "three/src/loaders/TextureLoader.js";
+import {MapControls, PerspectiveCamera} from "@react-three/drei";
 
-function App({ moduleData }) {
 
+function setPinColor(pinColor){
+    switch (pinColor){
+        case "green":
+            return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_green.png'
+        case "red":
+            return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_red.png'
+        case "yellow":
+            return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_yellow.png'
+        default:
+            return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_green.png'
+    }
+}
+
+function Pin(pinInfo){
+    const pinTexture = useLoader(TextureLoader, setPinColor(pinInfo.pin_color));
+    console.log(pinInfo)
+    return(
+        <>
+        <mesh position={[5,-8,0]}>
+            <planeGeometry args={[5,5]}/>
+            <meshBasicMaterial map={pinTexture} toneMapped={false} transparent={true}/>
+        </mesh>
+        </>
+    )
+}
+
+function Scene({mapImage}){
+    const riverwalkMap = useLoader(TextureLoader, mapImage);
+
+    return(
+        <>
+            <mesh>
+                <planeGeometry args={[70,50]}/>
+                <meshBasicMaterial map={riverwalkMap} toneMapped={false}/>
+            </mesh>
+        </>
+    )
+}
+
+
+function App({moduleData}) {
     const [floor, setFloor] = useState(1);
+    const [currentFloor, setCurrentFloor] = useState(floor);
+    const [riverwalkMap, setRiverwalkMap] = useState(moduleData.floor1.map_image.src);
+    const [pinInfo, setPinInfo] = useState()
 
-    function setFloorButton(){
-        setFloor(2)
+    function setFloorButton(floor) {
+        setFloor(floor)
+        floorHeading(floor)
+        setCurrentFloor(floor)
     }
 
-    const scene = new THREE.Scene()
-    scene.background = new THREE.Color('#f8f7f2')
-
-    var camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000)
-
-    const loader = new THREE.LoadingManager()
-    const textureLoader = new THREE.TextureLoader()
-
-
-    // Textures
-    const riverwalkLogo = textureLoader.load('https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/riverwalklogo.png')
-    const riverwalkMap = textureLoader.load('https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/map.jpg')
-
-    const renderer = new THREE.WebGLRenderer();
-
-    renderer.setSize(window.innerWidth, window.innerHeight)
-
-    // document.body.appendChild(renderer.domElement)
-    const threeRef = document.querySelector('.threeRef');
-    threeRef.appendChild(renderer.domElement)
-
-    var geometry = new THREE.PlaneGeometry(5,3)
-    var material = new THREE.MeshBasicMaterial()
-
-    material.map = riverwalkMap
-    material.transparent = true
-
-    var cube = new THREE.Mesh(geometry, material)
-
-    scene.add(cube)
-
-    // Controls
-    const controls = new TrackballControls(camera, renderer.domElement)
-    controls.enabled = true
-    controls.mouseButtons = {
-        MIDDLE: THREE.MOUSE.PAN
-    }
-    controls.noPan = false
-    controls.maxDistance = 2
-    controls.minDistance = 1
-    controls.noRotate = true
-    controls.panSpeed = 1
-    controls.zoomSpeed = .5
-    controls.dynamicDampingFactor = 0.1
-    controls.keys = ['KeyA', 'KeyS', 'KeyD']
-    camera.position.z = 5;
-
-    const clock = new THREE.Clock()
-    renderer.setPixelRatio(window.devicePixelRatio)
-
-    var animate = function(){
-
-        const elapsedTime = clock.getElapsedTime()
-
-        // rotates logo back and forth
-        // cube.rotation.y = Math.sin(elapsedTime) * .2
-
-        controls.update()
-        requestAnimationFrame(animate)
-
-        renderer.render(scene, camera)
+    function floorHeading(sentFloor) {
+        switch (sentFloor) {
+            case 1:
+                changeMap(moduleData.floor1)
+                return ReactHtmlParser(moduleData.floor1.heading);
+            case 2:
+                changeMap(moduleData.floor2)
+                return ReactHtmlParser(moduleData.floor2.heading);
+            case 3:
+                changeMap(moduleData.floor3)
+                return ReactHtmlParser(moduleData.floor3.heading);
+            default:
+                return 'No Floor Selected';
+        }
     }
 
-    let onWindowResize = function(){
-        camera.aspect = window.innerWidth / window.innerHeight
-        camera.updateProjectionMatrix()
-        renderer.setSize(window.innerWidth, window.innerHeight)
+    function changeMap(floorData) {
+        setRiverwalkMap(floorData.map_image.src);
     }
 
-    window.addEventListener('resize', onWindowResize, false)
+    // THREE JS STUFF
 
-    animate()
+    // Drop Pins Programmatically
 
+
+    console.log(moduleData)
     return (
-    <div className="cms-react-boilerplate__container">
-        Test 22
-        <p>Buttons:</p>
-        <button onClick={setFloorButton}>2</button>
+        <div className="cms-react-boilerplate__container">
+            <h1>Floor {currentFloor}</h1>
+            <p>Floors:</p>
+            <div className={"buttonSelector"}>
+                <button onClick={(e) => setFloorButton(1)}>1</button>
+                <button onClick={(e) => setFloorButton(2)}>2</button>
+                <button onClick={(e) => setFloorButton(3)}>3</button>
+            </div>
+            <h2>{(e) => floorHeading(currentFloor)}</h2>
 
-    </div>
-  );
+            <Canvas linear flat frameloop="demand" orthographic
+                    camera={{position: [0, 0, 50], zoom: 20, up: [0, 0, 1], far: 10000}}>
+                <Suspense fallback={null}>
+                    {moduleData.floor1.pins.map(e =>
+                        <Pin pinInfo={e}/>
+                    )}
+                    <Scene mapImage={riverwalkMap}/>
+                </Suspense>
+                <MapControls enableRotate={false}/>
+            </Canvas>
+        </div>
+    );
 }
 
 export default App;

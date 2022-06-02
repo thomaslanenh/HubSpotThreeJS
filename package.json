@@ -1,7 +1,7 @@
 {
-  "name": "cms-react-boilerplate",
+  "name": "lga-presale",
   "version": "1.0.0",
-  "description": "",
+  "description": "Created using React, HubSpot & ThreeJS",
   "main": "index.js",
   "scripts": {
     "start": "webpack --watch --env.autoupload --mode production",
@@ -39,8 +39,11 @@
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "@react-three/drei": "^9.11.0",
+    "@react-three/fiber": "^8.0.21",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-html-parser": "^2.0.2",
     "regenerator-runtime": "^0.13.3",
     "three": "^0.141.0"
   },
