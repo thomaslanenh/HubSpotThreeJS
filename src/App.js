@@ -28,7 +28,9 @@ function App({ moduleData }) {
 
     renderer.setSize(window.innerWidth, window.innerHeight)
 
-    document.body.appendChild(renderer.domElement)
+    // document.body.appendChild(renderer.domElement)
+    const threeRef = document.querySelector('.threeRef');
+    threeRef.appendChild(renderer.domElement)
 
     var geometry = new THREE.PlaneGeometry(5,3)
     var material = new THREE.MeshBasicMaterial()
@@ -87,6 +89,7 @@ function App({ moduleData }) {
         Test 22
         <p>Buttons:</p>
         <button onClick={setFloorButton}>2</button>
+
     </div>
   );
 }
