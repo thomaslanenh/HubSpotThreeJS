@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.scss';
 import * as THREE from 'three';
 import {TrackballControls} from "three/examples/jsm/controls/TrackballControls";
 
 function App({ moduleData }) {
+
+    const [floor, setFloor] = useState(1);
+
+    function setFloorButton(){
+        setFloor(2)
+    }
+
     const scene = new THREE.Scene()
     scene.background = new THREE.Color('#f8f7f2')
 
@@ -46,7 +53,7 @@ function App({ moduleData }) {
     controls.panSpeed = 1
     controls.zoomSpeed = .5
     controls.dynamicDampingFactor = 0.1
-    controls.keys = ['KeyA', 'KeyS'Y, 'KeyD']
+    controls.keys = ['KeyA', 'KeyS', 'KeyD']
     camera.position.z = 5;
 
     const clock = new THREE.Clock()
@@ -78,7 +85,8 @@ function App({ moduleData }) {
     return (
     <div className="cms-react-boilerplate__container">
         Test 22
-
+        <p>Buttons:</p>
+        <button onClick={setFloorButton}>2</button>
     </div>
   );
 }
