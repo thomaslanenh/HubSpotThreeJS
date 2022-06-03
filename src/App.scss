@@ -10,5 +10,95 @@
 
 
 .cms-react-boilerplate__container canvas{
-  height: 75vh;
+
+}
+
+.boxred{
+  background-color: rgba(255, 47, 41, 0.89);
+}
+
+.boxwhite{
+  background-color: rgba(178, 173, 173, 0.89);
+}
+
+.boxblue{
+  background-color: rgba(41, 97, 255, 0.89);
+}
+
+.boxblack{
+  background-color: rgba(40, 38, 38, 0.89);
+}
+
+.content {
+  transform: translate3d(5%, 0, 0);
+  text-align: left;
+  color: white;
+  border-radius: 1px;
+  padding: 1px;
+  width: 50px;
+}
+
+.show{
+  display: grid;
+  grid-template-columns: 98% auto;
+  animation: fadeIn 1s;
+  -webkit-animation: fadeIn 1s;
+  -moz-animation: fadeIn 1s;
+  -o-animation: fadeIn 1s;
+  -ms-animation: fadeIn 1s;
+}
+
+.hide{
+  display: none;
+}
+
+
+
+.popupBlock h2{
+  font-size: 2px;
+  color: white;
+  margin: 0px 0px 1px 0px;
+  padding: 0px;
+}
+
+.popupBlock p{
+  font-size: 1.2px;
+  color: white;
+  margin: 0px;
+  padding: 0px;
+}
+
+.closeButton{
+  opacity: 1;
+  transition: 0.3s ease-in-out;
+}
+
+.closeButton:hover{
+  opacity: 0.8;
+}
+
+//Animations
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1; }
+}
+
+@-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
 }

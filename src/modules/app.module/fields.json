@@ -43,6 +43,13 @@
           "locked": false
         },
         {
+          "type": "choice",
+          "name": "popup_color",
+          "label": "Popup Box Color",
+          "choices": [["boxred", "Red"], ["boxwhite", "White"], ["boxblue", "Blue"],["boxblack", "Black"]],
+          "requires": false
+        },
+        {
           "name": "pin_color",
           "type": "choice",
           "label": "Pin Color",
@@ -58,15 +65,15 @@
             {
               "type": "number",
               "name": "x_pos",
-              "label": "X Position",
-              "min": 0,
+              "label": "X Position (Negative Numbers Accepted)",
+              "min": null,
               "max": null
             },
             {
               "type": "number",
               "name": "y_pos",
-              "label" : "Y Position",
-              "min": 0,
+              "label" : "Y Position (Negative Numbers Accepted)",
+              "min": null,
               "max": null
             }
           ]
@@ -119,6 +126,13 @@
             "locked": false
           },
           {
+            "type": "choice",
+            "name": "popup_color",
+            "label": "Popup Box Color",
+            "choices": [["boxred", "Red"], ["boxwhite", "White"], ["boxblue", "Blue"],["boxblack", "Black"]],
+            "requires": false
+          },
+          {
             "name": "pin_color",
             "type": "choice",
             "label": "Pin Color",
@@ -134,15 +148,15 @@
               {
                 "type": "number",
                 "name": "x_pos",
-                "label": "X Position",
-                "min": 0,
+                "label": "X Position (Negative Numbers Accepted)",
+                "min": null,
                 "max": null
               },
               {
                 "type": "number",
                 "name": "y_pos",
-                "label" : "Y Position",
-                "min": 0,
+                "label" : "Y Position (Negative Numbers Accepted)",
+                "min": null,
                 "max": null
               }
             ]
@@ -195,6 +209,13 @@
             "locked": false
           },
           {
+            "type": "choice",
+            "name": "popup_color",
+            "label": "Popup Box Color",
+            "choices": [["boxred", "Red"], ["boxwhite", "White"], ["boxblue", "Blue"],["boxblack", "Black"]],
+            "requires": false
+          },
+          {
             "name": "pin_color",
             "type": "choice",
             "label": "Pin Color",
@@ -210,15 +231,15 @@
               {
                 "type": "number",
                 "name": "x_pos",
-                "label": "X Position",
-                "min": 0,
+                "label": "X Position (Negative Numbers Accepted)",
+                "min": null,
                 "max": null
               },
               {
                 "type": "number",
                 "name": "y_pos",
-                "label" : "Y Position",
-                "min": 0,
+                "label" : "Y Position (Negative Numbers Accepted)",
+                "min": null,
                 "max": null
               }
             ]

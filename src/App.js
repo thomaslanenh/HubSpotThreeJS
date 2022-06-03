@@ -1,10 +1,12 @@
-import React, {useState, useEffect, Suspense} from 'react';
+import React, {useState, useRef, useEffect, Suspense} from 'react';
 import './App.scss';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import {Canvas, useFrame, useLoader} from '@react-three/fiber'
 import {TextureLoader} from "three/src/loaders/TextureLoader.js";
-import {MapControls, PerspectiveCamera} from "@react-three/drei";
-
+import { invalidate } from "@react-three/fiber"
+import {MapControls, Html, PerspectiveCamera} from "@react-three/drei";
+import { useSpring } from '@react-spring/core'
+import {a} from '@react-spring/three';
 
 function setPinColor(pinColor){
     switch (pinColor){
@@ -19,15 +21,43 @@ function setPinColor(pinColor){
     }
 }
 
-function Pin(pinInfo){
+function Pin({props,pinInfo}){
+    const [active, setActive] = useState(0);
+    const [showPopup, setShowPopup] = useState(false);
+
+    const { spring } = useSpring({
+        spring: active,
+        onChange: () => {
+            invalidate()
+        },
+        config: {mass:5, tension: 400, friction: 50, precision: 0.0001}
+    })
+
+
+    const scale = spring.to([0,1], [1,1.25]);
+
     const pinTexture = useLoader(TextureLoader, setPinColor(pinInfo.pin_color));
-    console.log(pinInfo)
+
     return(
         <>
-        <mesh position={[5,-8,0]}>
+        <a.mesh {...props} scale-x={scale} scale-y={scale} scale-z={scale} onClick={() => {setShowPopup(!showPopup); setActive(Number(!active))}} position={[pinInfo.pin_position.x_pos,pinInfo.pin_position.y_pos,0]}>
+
             <planeGeometry args={[5,5]}/>
+
             <meshBasicMaterial map={pinTexture} toneMapped={false} transparent={true}/>
-        </mesh>
+            <Html distanceFactor={1}>
+                <div class={showPopup ? 'show content popupBlock ' + pinInfo.popup_color : 'hide content popupBlock ' + pinInfo.popup_color}>
+                    <div class="pinContent">
+                        <h2>{pinInfo.popup_title}</h2>
+                        {ReactHtmlParser(pinInfo.popup_content)}
+                    </div>
+                    <div class="closeButton" onClick={()=>setShowPopup(false)}>
+                        <p>✖</p>
+                    </div>
+                </div>
+            </Html>
+
+        </a.mesh>
         </>
     )
 }
@@ -94,17 +124,19 @@ function App({moduleData}) {
                 <button onClick={(e) => setFloorButton(3)}>3</button>
             </div>
             <h2>{(e) => floorHeading(currentFloor)}</h2>
-
-            <Canvas linear flat frameloop="demand" orthographic
-                    camera={{position: [0, 0, 50], zoom: 20, up: [0, 0, 1], far: 10000}}>
-                <Suspense fallback={null}>
-                    {moduleData.floor1.pins.map(e =>
-                        <Pin pinInfo={e}/>
-                    )}
-                    <Scene mapImage={riverwalkMap}/>
-                </Suspense>
-                <MapControls enableRotate={false}/>
-            </Canvas>
+            <div style={{ width: "75vw", height: "75vh" }}>
+                <Canvas linear flat frameloop="demand" orthographic
+                        camera={{position: [0, 0, 50], zoom: 20, up: [0, 0, 1], far: 10000}}
+                >
+                    <Suspense fallback={null}>
+                        {moduleData.floor1.pins.map(e =>
+                            <Pin pinInfo={e}/>
+                        )}
+                        <Scene mapImage={riverwalkMap}/>
+                    </Suspense>
+                    <MapControls enableRotate={false}/>
+                </Canvas>
+            </div>
         </div>
     );
 }
