@@ -24,6 +24,11 @@ function setPinColor(pinColor){
 function Pin({props,pinInfo}){
     const [active, setActive] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
+    const [hovered, setHovered] = useState(false);
+
+    useEffect(()=>{
+        document.body.style.cursor = hovered ? 'pointer' : 'auto'
+    },[hovered])
 
     const { spring } = useSpring({
         spring: active,
@@ -40,7 +45,7 @@ function Pin({props,pinInfo}){
 
     return(
         <>
-        <a.mesh {...props} scale-x={scale} scale-y={scale} scale-z={scale} onClick={() => {setShowPopup(!showPopup); setActive(Number(!active))}} position={[pinInfo.pin_position.x_pos,pinInfo.pin_position.y_pos,0]}>
+        <a.mesh {...props} scale-x={scale} scale-y={scale} scale-z={scale} onPointerOver={(e)=>setHovered(true)} onPointerOut={(e)=>setHovered(false)} onClick={() => {setShowPopup(!showPopup); setActive(Number(!active))}} position={[pinInfo.pin_position.x_pos,pinInfo.pin_position.y_pos,0]}>
 
             <planeGeometry args={[5,5]}/>
 

@@ -35,7 +35,7 @@
   color: white;
   border-radius: 1px;
   padding: 1px;
-  width: 50px;
+  width: 400%;
 }
 
 .show{
@@ -51,8 +51,6 @@
 .hide{
   display: none;
 }
-
-
 
 .popupBlock h2{
   font-size: 2px;
@@ -71,10 +69,12 @@
 .closeButton{
   opacity: 1;
   transition: 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .closeButton:hover{
   opacity: 0.8;
+  cursor: pointer;
 }
 
 //Animations
