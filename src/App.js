@@ -56,7 +56,10 @@ function Pin({props,pinInfo}){
                         <h2>{pinInfo.popup_title}</h2>
                         {ReactHtmlParser(pinInfo.popup_content)}
                     </div>
-                    <div class="closeButton" onClick={()=>setShowPopup(false)}>
+                    <div class="closeButton" onClick={()=> {
+                        setShowPopup(false);
+                        setActive(Number(!active));
+                    }}>
                         <p>✖</p>
                     </div>
                 </div>
@@ -129,7 +132,7 @@ function App({moduleData}) {
                 <button onClick={(e) => setFloorButton(3)}>3</button>
             </div>
             <h2>{(e) => floorHeading(currentFloor)}</h2>
-            <div style={{ width: "75vw", height: "75vh" }}>
+            <div style={{ width: "75vw", height: "75vh", border: "2px solid black" }}>
                 <Canvas linear flat frameloop="demand" orthographic
                         camera={{position: [0, 0, 50], zoom: 20, up: [0, 0, 1], far: 10000}}
                 >
