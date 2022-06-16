@@ -21,6 +21,22 @@
     },
     {
       "type": "group",
+      "name": "forms",
+      "label": "Forms",
+      "children": [
+        {
+          "type": "form",
+          "name": "waitlist_form",
+          "label": "Waitlist Form",
+          "default": {
+            "message": "Thanks for submitting the form.",
+            "form_type": "HUBSPOT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
       "name": "pins",
       "label": "Pins",
       "occurrence": {
@@ -54,27 +70,86 @@
           "type": "choice",
           "label": "Pin Color",
           "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
-          "required": true
+          "required": true,
+          "default": "green"
+        },
+        {
+          "type": "group",
+          "name": "availability",
+          "label": "Fractional Availability",
+          "expanded": false,
+          "children": [
+            {
+              "name": "frac1_av",
+              "type": "choice",
+              "label": "Fractional 1",
+              "choices": [["sold", "Sold"], ["available", "Available"]],
+              "default": "available",
+              "display": "radio"
+            },
+            {
+              "name": "frac2_av",
+              "type": "choice",
+              "label": "Fractional 2",
+              "choices": [["sold", "Sold"], ["available", "Available"]],
+              "default": "available",
+              "display": "radio"
+            },
+            {
+              "name": "frac3_av",
+              "type": "choice",
+              "label": "Fractional 3",
+              "choices": [["sold", "Sold"], ["available", "Available"]],
+              "default": "available",
+              "display": "radio"
+            },
+            {
+              "name": "frac4_av",
+              "type": "choice",
+              "label": "Fractional 4",
+              "choices": [["sold", "Sold"], ["available", "Available"]],
+              "default": "available",
+              "display": "radio"
+            },
+            {
+              "name": "frac5_av",
+              "type": "choice",
+              "label": "Fractional 5",
+              "choices": [["sold", "Sold"], ["available", "Available"]],
+              "default": "available",
+              "display": "radio"
+            },
+            {
+              "name": "frac6_av",
+              "type": "choice",
+              "label": "Fractional 6",
+              "choices": [["sold", "Sold"], ["available", "Available"]],
+              "default": "available",
+              "display": "radio"
+            }
+          ]
         },
         {
           "type": "group",
           "name": "pin_position",
           "label": "Pin Position",
-          "expanded": true,
+          "expanded": false,
           "children": [
             {
               "type": "number",
               "name": "x_pos",
               "label": "X Position (Negative Numbers Accepted)",
               "min": null,
-              "max": null
+              "max": null,
+              "default": 0
             },
             {
               "type": "number",
               "name": "y_pos",
               "label" : "Y Position (Negative Numbers Accepted)",
               "min": null,
-              "max": null
+              "max": null,
+              "default": 0
             }
           ]
         }
@@ -101,6 +176,22 @@
         "responsive": true,
         "resizeable": false,
         "type": "image"
+      },
+      {
+        "type": "group",
+        "name": "forms",
+        "label": "Forms",
+        "children": [
+          {
+            "type": "form",
+            "name": "waitlist_form",
+            "label": "Waitlist Form",
+            "default": {
+              "message": "Thanks for submitting the form.",
+              "form_type": "HUBSPOT"
+            }
+          }
+        ]
       },
       {
         "type": "group",
@@ -137,7 +228,64 @@
             "type": "choice",
             "label": "Pin Color",
             "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
-            "required": true
+            "required": true,
+            "default": "green"
+          },
+          {
+            "type": "group",
+            "name": "availability",
+            "label": "Fractional Availability",
+            "expanded": false,
+            "children": [
+              {
+                "name": "frac1_av",
+                "type": "choice",
+                "label": "Fractional 1",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac2_av",
+                "type": "choice",
+                "label": "Fractional 2",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac3_av",
+                "type": "choice",
+                "label": "Fractional 3",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac4_av",
+                "type": "choice",
+                "label": "Fractional 4",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac5_av",
+                "type": "choice",
+                "label": "Fractional 5",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac6_av",
+                "type": "choice",
+                "label": "Fractional 6",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              }
+            ]
           },
           {
             "type": "group",
@@ -187,6 +335,22 @@
       },
       {
         "type": "group",
+        "name": "forms",
+        "label": "Forms",
+        "children": [
+          {
+            "type": "form",
+            "name": "waitlist_form",
+            "label": "Waitlist Form",
+            "default": {
+              "message": "Thanks for submitting the form.",
+              "form_type": "HUBSPOT"
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
         "name": "pins",
         "label": "Pins",
         "occurrence": {
@@ -220,7 +384,64 @@
             "type": "choice",
             "label": "Pin Color",
             "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
-            "required": true
+            "required": true,
+            "default": "green"
+          },
+          {
+            "type": "group",
+            "name": "availability",
+            "label": "Fractional Availability",
+            "expanded": false,
+            "children": [
+              {
+                "name": "frac1_av",
+                "type": "choice",
+                "label": "Fractional 1",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac2_av",
+                "type": "choice",
+                "label": "Fractional 2",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac3_av",
+                "type": "choice",
+                "label": "Fractional 3",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac4_av",
+                "type": "choice",
+                "label": "Fractional 4",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac5_av",
+                "type": "choice",
+                "label": "Fractional 5",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac6_av",
+                "type": "choice",
+                "label": "Fractional 6",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              }
+            ]
           },
           {
             "type": "group",

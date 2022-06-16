@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect, Suspense} from 'react';
 import './App.scss';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-import {Canvas, useFrame, useLoader} from '@react-three/fiber'
+import {Canvas, useFrame, useThree, useLoader} from '@react-three/fiber'
 import {TextureLoader} from "three/src/loaders/TextureLoader.js";
 import { invalidate } from "@react-three/fiber"
 import {MapControls, Html, PerspectiveCamera} from "@react-three/drei";
@@ -38,34 +38,50 @@ function Pin({props,pinInfo}){
         config: {mass:5, tension: 400, friction: 50, precision: 0.0001}
     })
 
-
-    const scale = spring.to([0,1], [1,1.25]);
+    const scale = spring.to([0,1], [.6,1.25]);
 
     const pinTexture = useLoader(TextureLoader, setPinColor(pinInfo.pin_color));
 
     return(
         <>
-        <a.mesh {...props} scale-x={scale} scale-y={scale} scale-z={scale} onPointerOver={(e)=>setHovered(true)} onPointerOut={(e)=>setHovered(false)} onClick={() => {setShowPopup(!showPopup); setActive(Number(!active))}} position={[pinInfo.pin_position.x_pos,pinInfo.pin_position.y_pos,0]}>
+            <a.mesh {...props}
+                    scale-x={scale}
+                    scale-y={scale}
+                    scale-z={scale}
+                    onPointerOver={(e)=>setHovered(true)}
+                    onPointerOut={(e)=>setHovered(false)}
+                    onClick={() => {setShowPopup(!showPopup); setActive(Number(!active))}}
+                    onPointerMissed={() => {(setShowPopup(false)); showPopup === true ? setActive(Number(!active)) : null;}}
+                    position={[pinInfo.pin_position.x_pos,pinInfo.pin_position.y_pos,0]}>
 
-            <planeGeometry args={[5,5]}/>
+                <planeGeometry args={[5,5]}/>
 
-            <meshBasicMaterial map={pinTexture} toneMapped={false} transparent={true}/>
-            <Html distanceFactor={1}>
-                <div class={showPopup ? 'show content popupBlock ' + pinInfo.popup_color : 'hide content popupBlock ' + pinInfo.popup_color}>
-                    <div class="pinContent">
-                        <h2>{pinInfo.popup_title}</h2>
-                        {ReactHtmlParser(pinInfo.popup_content)}
+                <meshBasicMaterial map={pinTexture} toneMapped={false} transparent={true}/>
+                <Html distanceFactor={1}>
+                    <div class={showPopup ? 'show content popupBlock ' + pinInfo.popup_color : 'hide content popupBlock ' + pinInfo.popup_color}>
+                        <div class="pinContent">
+                            <h2>{pinInfo.popup_title}</h2>
+                            {ReactHtmlParser(pinInfo.popup_content)}
+                            <h4>Fractional Availability:</h4>
+                            <ul>
+                                <li><span className={"listHeader slightPadRight"}> I:</span>{pinInfo.availability.frac1_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
+                                <li><span className={"listHeader"}> II:</span> {pinInfo.availability.frac2_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
+                                <li><span className={"listHeader"}> III:</span> {pinInfo.availability.frac3_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
+                                <li><span className={"listHeader"}> IV:</span> {pinInfo.availability.frac4_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
+                                <li><span className={"listHeader"}> V:</span> {pinInfo.availability.frac5_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
+                                <li><span className={"listHeader"}> VI:</span> {pinInfo.availability.frac6_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
+                            </ul>
+                        </div>
+                        <div class="closeButton" onClick={()=> {
+                            setShowPopup(false);
+                            setActive(Number(!active));
+                        }}>
+                            <p>✖</p>
+                        </div>
                     </div>
-                    <div class="closeButton" onClick={()=> {
-                        setShowPopup(false);
-                        setActive(Number(!active));
-                    }}>
-                        <p>✖</p>
-                    </div>
-                </div>
-            </Html>
+                </Html>
 
-        </a.mesh>
+            </a.mesh>
         </>
     )
 }
@@ -88,11 +104,13 @@ function App({moduleData}) {
     const [floor, setFloor] = useState(1);
     const [currentFloor, setCurrentFloor] = useState(floor);
     const [riverwalkMap, setRiverwalkMap] = useState(moduleData.floor1.map_image.src);
+    const [currentPinSet, setCurrentPinSet] = useState('floor1');
     const [pinInfo, setPinInfo] = useState()
 
     function setFloorButton(floor) {
         setFloor(floor)
         floorHeading(floor)
+        changePins(floor)
         setCurrentFloor(floor)
     }
 
@@ -116,12 +134,26 @@ function App({moduleData}) {
         setRiverwalkMap(floorData.map_image.src);
     }
 
+    function changePins(sentFloor){
+        setCurrentPinSet('floor'+sentFloor);
+    }
+
+    function drawPins(currentSet){
+        switch (currentSet){
+            case 'floor1':
+                return moduleData.floor1.pins;
+            case 'floor2':
+                return moduleData.floor2.pins;
+            case 'floor3':
+                return moduleData.floor3.pins;
+        }
+    }
     // THREE JS STUFF
 
     // Drop Pins Programmatically
 
 
-    console.log(moduleData)
+    console.log(moduleData);
     return (
         <div className="cms-react-boilerplate__container">
             <h1>Floor {currentFloor}</h1>
@@ -137,7 +169,8 @@ function App({moduleData}) {
                         camera={{position: [0, 0, 50], zoom: 20, up: [0, 0, 1], far: 10000}}
                 >
                     <Suspense fallback={null}>
-                        {moduleData.floor1.pins.map(e =>
+                        {
+                            drawPins(currentPinSet).map(e =>
                             <Pin pinInfo={e}/>
                         )}
                         <Scene mapImage={riverwalkMap}/>
