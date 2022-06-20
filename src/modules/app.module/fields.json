@@ -47,23 +47,22 @@
         {
           "type": "text",
           "name": "popup_title",
-          "label": "Popup Title",
+          "label": "Pin Title",
           "required": false,
           "locked" : false
         },
         {
-          "type": "richtext",
-          "name": "popup_content",
-          "label": "Popup Content",
-          "required": false,
-          "locked": false
+          "type": "image",
+          "name": "pin_image",
+          "label": "Room Image",
+          "required": false
         },
         {
-          "type": "choice",
-          "name": "popup_color",
-          "label": "Popup Box Color",
-          "choices": [["boxred", "Red"], ["boxwhite", "White"], ["boxblue", "Blue"],["boxblack", "Black"]],
-          "requires": false
+          "type": "richtext",
+          "name": "popup_content",
+          "label": "Pin Content",
+          "required": false,
+          "locked": false
         },
         {
           "name": "pin_color",
@@ -205,23 +204,22 @@
           {
             "type": "text",
             "name": "popup_title",
-            "label": "Popup Title",
+            "label": "Pin Title",
             "required": false,
             "locked" : false
           },
           {
-            "type": "richtext",
-            "name": "popup_content",
-            "label": "Popup Content",
-            "required": false,
-            "locked": false
+            "type": "image",
+            "name": "pin_image",
+            "label": "Room Image",
+            "required": false
           },
           {
-            "type": "choice",
-            "name": "popup_color",
-            "label": "Popup Box Color",
-            "choices": [["boxred", "Red"], ["boxwhite", "White"], ["boxblue", "Blue"],["boxblack", "Black"]],
-            "requires": false
+            "type": "richtext",
+            "name": "popup_content",
+            "label": "Pin Content",
+            "required": false,
+            "locked": false
           },
           {
             "name": "pin_color",
@@ -361,23 +359,21 @@
           {
             "type": "text",
             "name": "popup_title",
-            "label": "Popup Title",
+            "label": "Pin Title",
             "required": false,
             "locked" : false
           },
           {
             "type": "richtext",
             "name": "popup_content",
-            "label": "Popup Content",
+            "label": "Pin Content",
             "required": false,
             "locked": false
-          },
-          {
-            "type": "choice",
-            "name": "popup_color",
-            "label": "Popup Box Color",
-            "choices": [["boxred", "Red"], ["boxwhite", "White"], ["boxblue", "Blue"],["boxblack", "Black"]],
-            "requires": false
+          },{
+            "type": "image",
+            "name": "pin_image",
+            "label": "Room Image",
+            "required": false
           },
           {
             "name": "pin_color",

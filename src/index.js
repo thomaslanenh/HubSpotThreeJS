@@ -8,7 +8,9 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 const targetModulesData = document.querySelectorAll(
   '.cms-react-boilerplate > script[type="application/json"]',
-);
+);1
+
+
 targetModulesData.forEach(({ dataset, textContent }) => {
   const root = document.getElementById(`App--${dataset.moduleInstance}`);
   return ReactDOM.render(

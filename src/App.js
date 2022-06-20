@@ -4,100 +4,9 @@ import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from
 import {Canvas, useFrame, useThree, useLoader} from '@react-three/fiber'
 import {TextureLoader} from "three/src/loaders/TextureLoader.js";
 import { invalidate } from "@react-three/fiber"
-import {MapControls, Html, PerspectiveCamera} from "@react-three/drei";
+import {MapControls, Html, PerspectiveCamera, Bounds, Glow, Sparkles, Billboard} from "@react-three/drei";
 import { useSpring } from '@react-spring/core'
 import {a} from '@react-spring/three';
-
-function setPinColor(pinColor){
-    switch (pinColor){
-        case "green":
-            return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_green.png'
-        case "red":
-            return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_red.png'
-        case "yellow":
-            return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_yellow.png'
-        default:
-            return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_green.png'
-    }
-}
-
-function Pin({props,pinInfo}){
-    const [active, setActive] = useState(0);
-    const [showPopup, setShowPopup] = useState(false);
-    const [hovered, setHovered] = useState(false);
-
-    useEffect(()=>{
-        document.body.style.cursor = hovered ? 'pointer' : 'auto'
-    },[hovered])
-
-    const { spring } = useSpring({
-        spring: active,
-        onChange: () => {
-            invalidate()
-        },
-        config: {mass:5, tension: 400, friction: 50, precision: 0.0001}
-    })
-
-    const scale = spring.to([0,1], [.6,1.25]);
-
-    const pinTexture = useLoader(TextureLoader, setPinColor(pinInfo.pin_color));
-
-    return(
-        <>
-            <a.mesh {...props}
-                    scale-x={scale}
-                    scale-y={scale}
-                    scale-z={scale}
-                    onPointerOver={(e)=>setHovered(true)}
-                    onPointerOut={(e)=>setHovered(false)}
-                    onClick={() => {setShowPopup(!showPopup); setActive(Number(!active))}}
-                    onPointerMissed={() => {(setShowPopup(false)); showPopup === true ? setActive(Number(!active)) : null;}}
-                    position={[pinInfo.pin_position.x_pos,pinInfo.pin_position.y_pos,0]}>
-
-                <planeGeometry args={[5,5]}/>
-
-                <meshBasicMaterial map={pinTexture} toneMapped={false} transparent={true}/>
-                <Html distanceFactor={1}>
-                    <div class={showPopup ? 'show content popupBlock ' + pinInfo.popup_color : 'hide content popupBlock ' + pinInfo.popup_color}>
-                        <div class="pinContent">
-                            <h2>{pinInfo.popup_title}</h2>
-                            {ReactHtmlParser(pinInfo.popup_content)}
-                            <h4>Fractional Availability:</h4>
-                            <ul>
-                                <li><span className={"listHeader slightPadRight"}> I:</span>{pinInfo.availability.frac1_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
-                                <li><span className={"listHeader"}> II:</span> {pinInfo.availability.frac2_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
-                                <li><span className={"listHeader"}> III:</span> {pinInfo.availability.frac3_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
-                                <li><span className={"listHeader"}> IV:</span> {pinInfo.availability.frac4_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
-                                <li><span className={"listHeader"}> V:</span> {pinInfo.availability.frac5_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
-                                <li><span className={"listHeader"}> VI:</span> {pinInfo.availability.frac6_av == "available" ? <span className={"greenText"}>Available</span> : <span className={"redText"}>Sold</span>}</li>
-                            </ul>
-                        </div>
-                        <div class="closeButton" onClick={()=> {
-                            setShowPopup(false);
-                            setActive(Number(!active));
-                        }}>
-                            <p>✖</p>
-                        </div>
-                    </div>
-                </Html>
-
-            </a.mesh>
-        </>
-    )
-}
-
-function Scene({mapImage}){
-    const riverwalkMap = useLoader(TextureLoader, mapImage);
-
-    return(
-        <>
-            <mesh>
-                <planeGeometry args={[70,50]}/>
-                <meshBasicMaterial map={riverwalkMap} toneMapped={false}/>
-            </mesh>
-        </>
-    )
-}
 
 
 function App({moduleData}) {
@@ -106,6 +15,142 @@ function App({moduleData}) {
     const [riverwalkMap, setRiverwalkMap] = useState(moduleData.floor1.map_image.src);
     const [currentPinSet, setCurrentPinSet] = useState('floor1');
     const [pinInfo, setPinInfo] = useState()
+    const [zoomLevel, setZoomLevel] = useState(15);
+    const [pinHtml, setPinHtml] = useState("");
+    const [showMap, setShowMap] = useState(true);
+    const [pinHeader, setPinHeader] = useState("Room: ");
+
+    function setPinColor(pinColor){
+        switch (pinColor){
+            case "green":
+                return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_green.png'
+            case "red":
+                return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_red.png'
+            case "yellow":
+                return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_yellow.png'
+            default:
+                return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_green.png'
+        }
+    }
+    function Scene({mapImage}){
+        const riverwalkMap = useLoader(TextureLoader, mapImage);
+
+        return(
+            <>
+                <mesh>
+                    <planeGeometry args={[70,50]}/>
+                    <meshBasicMaterial map={riverwalkMap} toneMapped={false}/>
+                </mesh>
+            </>
+        )
+    }
+
+    function Pin({props,pinInfo}){
+        const [active, setActive] = useState(0);
+        const [showPopup, setShowPopup] = useState(false);
+        const [hovered, setHovered] = useState(false);
+
+        useEffect(()=>{
+            document.body.style.cursor = hovered ? 'pointer' : 'auto'
+        },[hovered])
+
+        const { spring } = useSpring({
+            spring: active,
+            onChange: () => {
+                invalidate()
+            },
+            config: {mass:5, tension: 400, friction: 50, precision: 0.0001}
+        })
+
+        function returnPinClass(pin){
+            console.log('pin is: ' + pin);
+            switch (pin){
+                case 'available':
+                    return '<span class="greenText">Available</span>';
+                default:
+                    return '<span class="redText">Sold</span>';
+            }
+        }
+
+        function returnPinImage(pin){
+            console.log('pin image is: ' + pin);
+            return `<img src=${pin.src} alt=${pin.alt}/>`;
+        }
+
+        function setHtml(){
+            setPinHeader(`<div class="popupContentDiv">
+                                <h2>Room: ${pinInfo.popup_title}</h2>
+                            </div>`);
+            setPinHtml(`
+
+                        <div class="popupContentBlock">
+                            <div class="contentBlocks"> 
+                                <div class="contentBlockLeft">
+                                    <div class="fractionalDiv">
+                                        ${pinInfo.pin_image ? returnPinImage(pinInfo.pin_image): ''}
+                                        <h4>Fractional Availability:</h4>
+                                                        <ul>
+                                                            <li>
+                                                                <span class="listHeader slightPadRight"> I:</span>${returnPinClass(pinInfo.availability.frac1_av)}
+                                                            </li>
+                                                             <li>
+                                                                <span class="listHeader slightPadRight"> II:</span>${returnPinClass(pinInfo.availability.frac2_av)}
+                                                            </li>
+                                                             <li>
+                                                                <span class="listHeader slightPadRight"> III:</span>${returnPinClass(pinInfo.availability.frac3_av)}
+                                                            </li>
+                                                             <li>
+                                                                <span class="listHeader slightPadRight"> IV:</span>${returnPinClass(pinInfo.availability.frac4_av)}
+                                                            </li>
+                                                             <li>
+                                                                <span class="listHeader slightPadRight"> V:</span>${returnPinClass(pinInfo.availability.frac5_av)}
+                                                            </li>
+                                                             <li>
+                                                                <span class="listHeader slightPadRight"> VI:</span>${returnPinClass(pinInfo.availability.frac6_av)}
+                                                            </li>
+                                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="contentBlockRight">
+                                   ${pinInfo.popup_content}
+                                </div>
+                            </div>
+                         
+                                
+                    </div>
+`);
+        }
+        const scale = spring.to([0,1], [.6,1.25]);
+
+        const pinTexture = useLoader(TextureLoader, setPinColor(pinInfo.pin_color));
+
+
+        return(
+            <>
+                <a.mesh {...props}
+                        scale-x={scale}
+                        scale-y={scale}
+                        scale-z={scale}
+                        onPointerOver={(e)=> {
+                            setActive(Number(!active));
+                        }}
+                        onPointerOut={(e)=>{
+                            setActive(Number(!active));
+                        }}
+                        onClick={e => {
+                            setHtml();
+                            setShowMap(false);
+                        }}
+                        onPointerMissed={() => {setShowPopup(false)}}
+                        position={[pinInfo.pin_position.x_pos,pinInfo.pin_position.y_pos,0]}
+                        >
+                    <planeGeometry args={[5,5]}/>
+                    <meshBasicMaterial map={pinTexture} toneMapped={false} transparent={true}/>
+
+                </a.mesh>
+            </>
+        )
+    }
 
     function setFloorButton(floor) {
         setFloor(floor)
@@ -156,27 +201,54 @@ function App({moduleData}) {
     console.log(moduleData);
     return (
         <div className="cms-react-boilerplate__container">
-            <h1>Floor {currentFloor}</h1>
-            <p>Floors:</p>
-            <div className={"buttonSelector"}>
-                <button onClick={(e) => setFloorButton(1)}>1</button>
-                <button onClick={(e) => setFloorButton(2)}>2</button>
-                <button onClick={(e) => setFloorButton(3)}>3</button>
+            <div className={"mapInfo"}>
+                <h1>Floor {currentFloor}</h1>
+                <p>Floors:</p>
+                <div className={"buttonSelector"}>
+                    <button onClick={(e) => {
+                        setFloorButton(1);
+                        setPinHtml('');
+                    }}>1</button>
+                    <button onClick={(e) => {
+                        setFloorButton(2);
+                        setPinHtml('');
+                    }}>2</button>
+                    <button onClick={(e) => {
+                        setFloorButton(3);
+                        setPinHtml('');
+                    }}>3</button>
+                </div>
             </div>
-            <h2>{(e) => floorHeading(currentFloor)}</h2>
-            <div style={{ width: "75vw", height: "75vh", border: "2px solid black" }}>
-                <Canvas linear flat frameloop="demand" orthographic
-                        camera={{position: [0, 0, 50], zoom: 20, up: [0, 0, 1], far: 10000}}
-                >
-                    <Suspense fallback={null}>
-                        {
-                            drawPins(currentPinSet).map(e =>
-                            <Pin pinInfo={e}/>
-                        )}
-                        <Scene mapImage={riverwalkMap}/>
-                    </Suspense>
-                    <MapControls enableRotate={false}/>
-                </Canvas>
+            <div className={"mapGrid"}>
+                <div className={"mapDiv"} style={{ width: "75vw", height: "75vh", border: "2px solid black" }}>
+                    <Canvas linear flat frameloop="demand" orthographic
+                            camera={{position: [0, 0, 20], zoom: zoomLevel, up: [0, 0, 1], far: 10000}}
+                    >
+                        {showMap ? <Suspense fallback={null}>
+                            {
+                                drawPins(currentPinSet).map(e =>
+                                    <Pin pinInfo={e}/>
+                                )}
+
+                                <Scene mapImage={riverwalkMap}/>
+                        </Suspense> : null}
+                        <MapControls enableRotate={false}/>
+                    </Canvas>
+                </div>
+                <div className={'infoLeft'} >
+                    {!showMap ?
+                    <div className={"infoGridBlock"}>
+                        {ReactHtmlParser(pinHeader)}
+                        <div className="closeButton" onClick={() => {
+                            setShowMap(true);
+                            setPinHtml('');
+                        }}>
+                            <p>✖</p>
+                        </div>
+                    </div>
+                    : null }
+                    {ReactHtmlParser(pinHtml)}
+                </div>
             </div>
         </div>
     );

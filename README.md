@@ -1,6 +1,6 @@
 # HubSpot ThreeJS Floor Plan
 
-This package provides an interactive hotel floor plan in a 2D plane using the ThreeJS Javascript framework. 
+This package provides an interactive hotel floor plan in a 2D plane using the ThreeJS Javascript framework for the HubSpot ecosystem as a module. 
 
 ### Limitations:
 

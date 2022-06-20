@@ -1,21 +1,59 @@
-.cms-react-boilerplate__container {
+.cms-react-boilerplate__container{
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+}
+
+.contentBlocks{
+  display: flex;
+  justify-content: space-around;
+  padding-top: 50px;
+  padding-bottom: 25px;
+  background: rgba(193, 66, 66, 0.06);
+}
+.popupContentBlock{
+  background: rgba(193, 66, 66, 0.06);
+
+}
+
+.contentBlocks img{
+  max-width: 500px;
+}
+
+.mapGrid{
+  display: grid;
+}
+
+.mapDiv{
+  grid-area: 1/1;
+}
+
+.infoLeft{
+  grid-area: 1/1;
+  height: 100%;
+  margin: 25px;
+}
+
+.infoGridBlock{
+  display: grid;
+  grid-template-columns: 98% auto;
+  background: rgba(193, 66, 66, 0.06);
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+.zAddIndex{
+  z-index: 1;
 }
 
 .listHeader{
-  width: 1px;
   display: inline-block;
 }
 
 .greenText{
   color: green !important;
-  font-size: 1px;
 }
 
 .slightPadRight{
@@ -24,11 +62,6 @@
 
 .redText{
   color: red !important;
-  font-size: 1px;
-}
-
-.cms-react-boilerplate__container canvas{
-
 }
 
 .boxred{
@@ -71,14 +104,12 @@
 }
 
 .popupBlock h2{
-  font-size: 2px;
   color: white;
   margin: 0px 0px 1px 0px;
   padding: 0px;
 }
 
 .popupBlock h4{
-  font-size: 1.2px;
   color: white;
   margin: .5px 0px .5px 0px;
   padding: 0px;
@@ -91,7 +122,7 @@
 }
 
 .popupBlock li{
-  font-size: .8px;
+
   color: white;
   margin: 0px 0px 0px .2px;
   padding: 0px;
@@ -99,7 +130,7 @@
 }
 
 .popupBlock p{
-  font-size: 1.2px;
+
   color: white;
   margin: 0px;
   padding: 0px;
@@ -109,6 +140,12 @@
   opacity: 1;
   transition: 0.3s ease-in-out;
   cursor: pointer;
+  z-index: 99999;
+  padding-right: 50px;
+}
+
+.closeButton p{
+  font-size: 30px;
 }
 
 .closeButton:hover{
