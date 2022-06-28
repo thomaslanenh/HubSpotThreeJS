@@ -21,22 +21,6 @@
     },
     {
       "type": "group",
-      "name": "forms",
-      "label": "Forms",
-      "children": [
-        {
-          "type": "form",
-          "name": "waitlist_form",
-          "label": "Waitlist Form",
-          "default": {
-            "message": "Thanks for submitting the form.",
-            "form_type": "HUBSPOT"
-          }
-        }
-      ]
-    },
-    {
-      "type": "group",
       "name": "pins",
       "label": "Pins",
       "occurrence": {
@@ -50,6 +34,12 @@
           "label": "Pin Title",
           "required": false,
           "locked" : false
+        },
+        {
+          "type": "file",
+          "label": "PDF",
+          "picker": "document",
+          "name": "pdf_file"
         },
         {
           "type": "image",
@@ -69,7 +59,7 @@
           "type": "choice",
           "label": "Pin Color",
           "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
-          "required": true,
+          "required": false,
           "default": "green"
         },
         {
@@ -178,22 +168,6 @@
       },
       {
         "type": "group",
-        "name": "forms",
-        "label": "Forms",
-        "children": [
-          {
-            "type": "form",
-            "name": "waitlist_form",
-            "label": "Waitlist Form",
-            "default": {
-              "message": "Thanks for submitting the form.",
-              "form_type": "HUBSPOT"
-            }
-          }
-        ]
-      },
-      {
-        "type": "group",
         "name": "pins",
         "label": "Pins",
         "occurrence": {
@@ -207,6 +181,12 @@
             "label": "Pin Title",
             "required": false,
             "locked" : false
+          },
+          {
+            "type": "file",
+            "label": "PDF",
+            "picker": "document",
+            "name": "pdf_file"
           },
           {
             "type": "image",
@@ -226,7 +206,7 @@
             "type": "choice",
             "label": "Pin Color",
             "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
-            "required": true,
+            "required": false,
             "default": "green"
           },
           {
@@ -333,19 +313,147 @@
       },
       {
         "type": "group",
-        "name": "forms",
-        "label": "Forms",
+        "name": "pins",
+        "label": "Pins",
+        "occurrence": {
+          "min" : 1,
+          "max" : null
+        },
         "children": [
           {
-            "type": "form",
-            "name": "waitlist_form",
-            "label": "Waitlist Form",
-            "default": {
-              "message": "Thanks for submitting the form.",
-              "form_type": "HUBSPOT"
-            }
+            "type": "text",
+            "name": "popup_title",
+            "label": "Pin Title",
+            "required": false,
+            "locked" : false
+          },
+          {
+            "type": "file",
+            "label": "PDF",
+            "picker": "document",
+            "name": "pdf_file"
+          },
+          {
+            "type": "richtext",
+            "name": "popup_content",
+            "label": "Pin Content",
+            "required": false,
+            "locked": false
+          },{
+            "type": "image",
+            "name": "pin_image",
+            "label": "Room Image",
+            "required": false
+          },
+          {
+            "name": "pin_color",
+            "type": "choice",
+            "label": "Pin Color",
+            "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
+            "required": false,
+            "default": "green"
+          },
+          {
+            "type": "group",
+            "name": "availability",
+            "label": "Fractional Availability",
+            "expanded": false,
+            "children": [
+              {
+                "name": "frac1_av",
+                "type": "choice",
+                "label": "Fractional 1",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac2_av",
+                "type": "choice",
+                "label": "Fractional 2",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac3_av",
+                "type": "choice",
+                "label": "Fractional 3",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac4_av",
+                "type": "choice",
+                "label": "Fractional 4",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac5_av",
+                "type": "choice",
+                "label": "Fractional 5",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "name": "frac6_av",
+                "type": "choice",
+                "label": "Fractional 6",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "name": "pin_position",
+            "label": "Pin Position",
+            "expanded": true,
+            "children": [
+              {
+                "type": "number",
+                "name": "x_pos",
+                "label": "X Position (Negative Numbers Accepted)",
+                "min": null,
+                "max": null
+              },
+              {
+                "type": "number",
+                "name": "y_pos",
+                "label" : "Y Position (Negative Numbers Accepted)",
+                "min": null,
+                "max": null
+              }
+            ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "name": "floor4",
+    "label": "Floor 4",
+    "expanded": false,
+    "children": [
+      {
+        "type": "text",
+        "name": "heading",
+        "label": "Heading",
+        "required": false
+      },
+      {
+        "name": "map_image",
+        "label": "Map Image",
+        "required": false,
+        "responsive": true,
+        "resizeable": false,
+        "type": "image"
       },
       {
         "type": "group",
@@ -380,7 +488,7 @@
             "type": "choice",
             "label": "Pin Color",
             "choices": [["green", "Green"],["yellow", "Yellow"], ["red", "Red"]],
-            "required": true,
+            "required": false,
             "default": "green"
           },
           {

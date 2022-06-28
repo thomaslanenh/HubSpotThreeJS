@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, Suspense} from 'react';
+import React, {useState, useRef, useEffect, useLayoutEffect, Suspense} from 'react';
 import './App.scss';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import {Canvas, useFrame, useThree, useLoader} from '@react-three/fiber'
@@ -7,6 +7,7 @@ import { invalidate } from "@react-three/fiber"
 import {MapControls, Html, PerspectiveCamera, Bounds, Glow, Sparkles, Billboard} from "@react-three/drei";
 import { useSpring } from '@react-spring/core'
 import {a} from '@react-spring/three';
+import Popup from 'reactjs-popup';
 
 
 function App({moduleData}) {
@@ -15,10 +16,14 @@ function App({moduleData}) {
     const [riverwalkMap, setRiverwalkMap] = useState(moduleData.floor1.map_image.src);
     const [currentPinSet, setCurrentPinSet] = useState('floor1');
     const [pinInfo, setPinInfo] = useState()
-    const [zoomLevel, setZoomLevel] = useState(15);
+    const [zoomLevel, setZoomLevel] = useState(17);
     const [pinHtml, setPinHtml] = useState("");
     const [showMap, setShowMap] = useState(true);
-    const [pinHeader, setPinHeader] = useState("Room: ");
+    const [pinHeader, setPinHeader] = useState("Unit: ");
+    const [open, setOpen] = useState(false);
+
+
+    const closeModal = () => setOpen(false);
 
     function setPinColor(pinColor){
         switch (pinColor){
@@ -32,6 +37,8 @@ function App({moduleData}) {
                 return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_green.png'
         }
     }
+
+
     function Scene({mapImage}){
         const riverwalkMap = useLoader(TextureLoader, mapImage);
 
@@ -39,7 +46,7 @@ function App({moduleData}) {
             <>
                 <mesh>
                     <planeGeometry args={[70,50]}/>
-                    <meshBasicMaterial map={riverwalkMap} toneMapped={false}/>
+                    <meshBasicMaterial map={riverwalkMap} toneMapped={false} layers={1}/>
                 </mesh>
             </>
         )
@@ -78,45 +85,19 @@ function App({moduleData}) {
         }
 
         function setHtml(){
-            setPinHeader(`<div class="popupContentDiv">
-                                <h2>Room: ${pinInfo.popup_title}</h2>
-                            </div>`);
+            setPinHeader(`<h2>Unit: ${pinInfo.popup_title}</h2>`);
             setPinHtml(`
-
                         <div class="popupContentBlock">
                             <div class="contentBlocks"> 
                                 <div class="contentBlockLeft">
+                                    <div class="pdfViewer">
+                                        <iframe src="${pinInfo.pdf_file}"></iframe>
+                                    </div>
                                     <div class="fractionalDiv">
-                                        ${pinInfo.pin_image ? returnPinImage(pinInfo.pin_image): ''}
-                                        <h4>Fractional Availability:</h4>
-                                                        <ul>
-                                                            <li>
-                                                                <span class="listHeader slightPadRight"> I:</span>${returnPinClass(pinInfo.availability.frac1_av)}
-                                                            </li>
-                                                             <li>
-                                                                <span class="listHeader slightPadRight"> II:</span>${returnPinClass(pinInfo.availability.frac2_av)}
-                                                            </li>
-                                                             <li>
-                                                                <span class="listHeader slightPadRight"> III:</span>${returnPinClass(pinInfo.availability.frac3_av)}
-                                                            </li>
-                                                             <li>
-                                                                <span class="listHeader slightPadRight"> IV:</span>${returnPinClass(pinInfo.availability.frac4_av)}
-                                                            </li>
-                                                             <li>
-                                                                <span class="listHeader slightPadRight"> V:</span>${returnPinClass(pinInfo.availability.frac5_av)}
-                                                            </li>
-                                                             <li>
-                                                                <span class="listHeader slightPadRight"> VI:</span>${returnPinClass(pinInfo.availability.frac6_av)}
-                                                            </li>
-                                                        </ul>
+                                        <a href="${pinInfo.pdf_file}" target="_blank" aria-label="Download PDF">Download PDF</a>
                                     </div>
                                 </div>
-                                <div class="contentBlockRight">
-                                   ${pinInfo.popup_content}
-                                </div>
-                            </div>
-                         
-                                
+                            </div> 
                     </div>
 `);
         }
@@ -139,7 +120,8 @@ function App({moduleData}) {
                         }}
                         onClick={e => {
                             setHtml();
-                            setShowMap(false);
+                            setOpen(o => !o);
+                            // setShowMap(false);
                         }}
                         onPointerMissed={() => {setShowPopup(false)}}
                         position={[pinInfo.pin_position.x_pos,pinInfo.pin_position.y_pos,0]}
@@ -170,6 +152,9 @@ function App({moduleData}) {
             case 3:
                 changeMap(moduleData.floor3)
                 return ReactHtmlParser(moduleData.floor3.heading);
+            case 4:
+                changeMap(moduleData.floor4)
+                return ReactHtmlParser(moduleData.floor4.heading);
             default:
                 return 'No Floor Selected';
         }
@@ -183,6 +168,10 @@ function App({moduleData}) {
         setCurrentPinSet('floor'+sentFloor);
     }
 
+    function closePop(){
+        setOpen(false);
+    }
+
     function drawPins(currentSet){
         switch (currentSet){
             case 'floor1':
@@ -191,6 +180,8 @@ function App({moduleData}) {
                 return moduleData.floor2.pins;
             case 'floor3':
                 return moduleData.floor3.pins;
+            case 'floor4':
+                return moduleData.floor4.pins;
         }
     }
     // THREE JS STUFF
@@ -217,25 +208,27 @@ function App({moduleData}) {
                         setFloorButton(3);
                         setPinHtml('');
                     }}>3</button>
+                    <button onClick={(e) => {
+                        setFloorButton(4);
+                        setPinHtml('');
+                    }}>4</button>
                 </div>
             </div>
-            <div className={"mapGrid"}>
-                <div className={"mapDiv"} style={{ width: "75vw", height: "75vh", border: "2px solid black" }}>
+            <div className={"mapDiv"} style={{ border: "2px solid black" }}>
                     <Canvas linear flat frameloop="demand" orthographic
-                            camera={{position: [0, 0, 20], zoom: zoomLevel, up: [0, 0, 1], far: 10000}}
+                            camera={{position: [0, 0, 15], zoom: zoomLevel, up: [0, 0, 1], far: 10000}}
                     >
                         {showMap ? <Suspense fallback={null}>
                             {
                                 drawPins(currentPinSet).map(e =>
                                     <Pin pinInfo={e}/>
                                 )}
-
                                 <Scene mapImage={riverwalkMap}/>
                         </Suspense> : null}
                         <MapControls enableRotate={false}/>
                     </Canvas>
-                </div>
-                <div className={'infoLeft'} >
+            </div>
+            <div className={'infoLeft'} >
                     {!showMap ?
                     <div className={"infoGridBlock"}>
                         {ReactHtmlParser(pinHeader)}
@@ -247,10 +240,18 @@ function App({moduleData}) {
                         </div>
                     </div>
                     : null }
-                    {ReactHtmlParser(pinHtml)}
+                    <Popup open={open} closeOnDocumentClick onClose={closeModal} lockScroll={true}>
+                        <div className={"modalBlock"} role="dialog">
+                            <div className={"popupContentDiv"}>
+                                <div className={"popupHeaderLeft"}>{ReactHtmlParser(pinHeader)}</div>
+                                <div className={"popupHeaderRight"}><a onClick={closePop} aria-label="Close Popup">&times;</a></div>
+                            </div>
+                            {ReactHtmlParser(pinHtml)}
+                        </div>
+                    </Popup>
                 </div>
             </div>
-        </div>
+
     );
 }
 
