@@ -41,12 +41,7 @@
           "picker": "document",
           "name": "pdf_file"
         },
-        {
-          "type": "image",
-          "name": "pin_image",
-          "label": "Room Image",
-          "required": false
-        },
+
         {
           "type": "richtext",
           "name": "popup_content",
@@ -64,60 +59,84 @@
         },
         {
           "type": "group",
-          "name": "availability",
+          "name": "fracavailability",
           "label": "Fractional Availability",
           "expanded": false,
           "children": [
             {
-              "name": "frac1_av",
               "type": "choice",
-              "label": "Fractional 1",
+              "name": "whole_ownership",
+              "label": "Whole Ownership",
               "choices": [["sold", "Sold"], ["available", "Available"]],
               "default": "available",
               "display": "radio"
             },
             {
-              "name": "frac2_av",
               "type": "choice",
-              "label": "Fractional 2",
+              "name": "winter_season",
+              "label": "Winter Seasonal",
               "choices": [["sold", "Sold"], ["available", "Available"]],
               "default": "available",
               "display": "radio"
             },
             {
-              "name": "frac3_av",
               "type": "choice",
-              "label": "Fractional 3",
+              "name": "summer_season",
+              "label": "Summer Seasonal",
               "choices": [["sold", "Sold"], ["available", "Available"]],
               "default": "available",
               "display": "radio"
             },
-            {
-              "name": "frac4_av",
-              "type": "choice",
-              "label": "Fractional 4",
-              "choices": [["sold", "Sold"], ["available", "Available"]],
-              "default": "available",
-              "display": "radio"
+                {
+                  "name": "frac1_av",
+                  "type": "choice",
+                  "label": "Fractional 1",
+                  "choices": [["sold", "Sold"], ["available", "Available"]],
+                  "default": "available",
+                  "display": "radio"
+                },
+                {
+                  "name": "frac2_av",
+                  "type": "choice",
+                  "label": "Fractional 2",
+                  "choices": [["sold", "Sold"], ["available", "Available"]],
+                  "default": "available",
+                  "display": "radio"
+                },
+                {
+                  "name": "frac3_av",
+                  "type": "choice",
+                  "label": "Fractional 3",
+                  "choices": [["sold", "Sold"], ["available", "Available"]],
+                  "default": "available",
+                  "display": "radio"
+                },
+                {
+                  "name": "frac4_av",
+                  "type": "choice",
+                  "label": "Fractional 4",
+                  "choices": [["sold", "Sold"], ["available", "Available"]],
+                  "default": "available",
+                  "display": "radio"
+                },
+                {
+                  "name": "frac5_av",
+                  "type": "choice",
+                  "label": "Fractional 5",
+                  "choices": [["sold", "Sold"], ["available", "Available"]],
+                  "default": "available",
+                  "display": "radio"
+                },
+                {
+                  "name": "frac6_av",
+                  "type": "choice",
+                  "label": "Fractional 6",
+                  "choices": [["sold", "Sold"], ["available", "Available"]],
+                  "default": "available",
+                  "display": "radio"
+                }
+            ]
             },
-            {
-              "name": "frac5_av",
-              "type": "choice",
-              "label": "Fractional 5",
-              "choices": [["sold", "Sold"], ["available", "Available"]],
-              "default": "available",
-              "display": "radio"
-            },
-            {
-              "name": "frac6_av",
-              "type": "choice",
-              "label": "Fractional 6",
-              "choices": [["sold", "Sold"], ["available", "Available"]],
-              "default": "available",
-              "display": "radio"
-            }
-          ]
-        },
         {
           "type": "group",
           "name": "pin_position",
@@ -188,12 +207,7 @@
             "picker": "document",
             "name": "pdf_file"
           },
-          {
-            "type": "image",
-            "name": "pin_image",
-            "label": "Room Image",
-            "required": false
-          },
+
           {
             "type": "richtext",
             "name": "popup_content",
@@ -211,10 +225,34 @@
           },
           {
             "type": "group",
-            "name": "availability",
+            "name": "fracavailability",
             "label": "Fractional Availability",
             "expanded": false,
             "children": [
+              {
+                "type": "choice",
+                "name": "whole_ownership",
+                "label": "Whole Ownership",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "type": "choice",
+                "name": "winter_season",
+                "label": "Winter Seasonal",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "type": "choice",
+                "name": "summer_season",
+                "label": "Summer Seasonal",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
               {
                 "name": "frac1_av",
                 "type": "choice",
@@ -269,21 +307,23 @@
             "type": "group",
             "name": "pin_position",
             "label": "Pin Position",
-            "expanded": true,
+            "expanded": false,
             "children": [
               {
                 "type": "number",
                 "name": "x_pos",
                 "label": "X Position (Negative Numbers Accepted)",
                 "min": null,
-                "max": null
+                "max": null,
+                "default": 0
               },
               {
                 "type": "number",
                 "name": "y_pos",
                 "label" : "Y Position (Negative Numbers Accepted)",
                 "min": null,
-                "max": null
+                "max": null,
+                "default": 0
               }
             ]
           }
@@ -333,17 +373,13 @@
             "picker": "document",
             "name": "pdf_file"
           },
+
           {
             "type": "richtext",
             "name": "popup_content",
             "label": "Pin Content",
             "required": false,
             "locked": false
-          },{
-            "type": "image",
-            "name": "pin_image",
-            "label": "Room Image",
-            "required": false
           },
           {
             "name": "pin_color",
@@ -355,10 +391,34 @@
           },
           {
             "type": "group",
-            "name": "availability",
+            "name": "fracavailability",
             "label": "Fractional Availability",
             "expanded": false,
             "children": [
+              {
+                "type": "choice",
+                "name": "whole_ownership",
+                "label": "Whole Ownership",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "type": "choice",
+                "name": "winter_season",
+                "label": "Winter Seasonal",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "type": "choice",
+                "name": "summer_season",
+                "label": "Summer Seasonal",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
               {
                 "name": "frac1_av",
                 "type": "choice",
@@ -413,21 +473,23 @@
             "type": "group",
             "name": "pin_position",
             "label": "Pin Position",
-            "expanded": true,
+            "expanded": false,
             "children": [
               {
                 "type": "number",
                 "name": "x_pos",
                 "label": "X Position (Negative Numbers Accepted)",
                 "min": null,
-                "max": null
+                "max": null,
+                "default": 0
               },
               {
                 "type": "number",
                 "name": "y_pos",
                 "label" : "Y Position (Negative Numbers Accepted)",
                 "min": null,
-                "max": null
+                "max": null,
+                "default": 0
               }
             ]
           }
@@ -472,16 +534,18 @@
             "locked" : false
           },
           {
+            "type": "file",
+            "label": "PDF",
+            "picker": "document",
+            "name": "pdf_file"
+          },
+
+          {
             "type": "richtext",
             "name": "popup_content",
             "label": "Pin Content",
             "required": false,
             "locked": false
-          },{
-            "type": "image",
-            "name": "pin_image",
-            "label": "Room Image",
-            "required": false
           },
           {
             "name": "pin_color",
@@ -493,10 +557,34 @@
           },
           {
             "type": "group",
-            "name": "availability",
+            "name": "fracavailability",
             "label": "Fractional Availability",
             "expanded": false,
             "children": [
+              {
+                "type": "choice",
+                "name": "whole_ownership",
+                "label": "Whole Ownership",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "type": "choice",
+                "name": "winter_season",
+                "label": "Winter Seasonal",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
+              {
+                "type": "choice",
+                "name": "summer_season",
+                "label": "Summer Seasonal",
+                "choices": [["sold", "Sold"], ["available", "Available"]],
+                "default": "available",
+                "display": "radio"
+              },
               {
                 "name": "frac1_av",
                 "type": "choice",
@@ -551,21 +639,23 @@
             "type": "group",
             "name": "pin_position",
             "label": "Pin Position",
-            "expanded": true,
+            "expanded": false,
             "children": [
               {
                 "type": "number",
                 "name": "x_pos",
                 "label": "X Position (Negative Numbers Accepted)",
                 "min": null,
-                "max": null
+                "max": null,
+                "default": 0
               },
               {
                 "type": "number",
                 "name": "y_pos",
                 "label" : "Y Position (Negative Numbers Accepted)",
                 "min": null,
-                "max": null
+                "max": null,
+                "default": 0
               }
             ]
           }

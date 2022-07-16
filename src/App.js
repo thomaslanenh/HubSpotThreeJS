@@ -22,7 +22,6 @@ function App({moduleData}) {
     const [pinHeader, setPinHeader] = useState("Unit: ");
     const [open, setOpen] = useState(false);
 
-
     const closeModal = () => setOpen(false);
 
     function setPinColor(pinColor){
@@ -37,7 +36,6 @@ function App({moduleData}) {
                 return 'https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/RiverWalk/Test%20Images/pin_green.png'
         }
     }
-
 
     function Scene({mapImage}){
         const riverwalkMap = useLoader(TextureLoader, mapImage);
@@ -89,12 +87,56 @@ function App({moduleData}) {
             setPinHtml(`
                         <div class="popupContentBlock">
                             <div class="contentBlocks"> 
-                                <div class="contentBlockLeft">
-                                    <div class="pdfViewer">
-                                        <iframe src="${pinInfo.pdf_file}"></iframe>
+                                <div class="contentBlockGrid">
+                                    <div class="availabilityBlock">
+                                        <table>
+                                        <tr>
+                                            <th class="invisible"></th>
+                                            <th>Availability</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="leftHeader">Fraction 1</td>
+                                            <td>${returnPinClass(pinInfo.fracavailability.frac1_av)}</td>
+                                         </tr>
+                                         <tr>
+                                            <td class="leftHeader">Fraction 2</td>
+                                            <td>${returnPinClass(pinInfo.fracavailability.frac2_av)}</td>
+                                         </tr>
+                                         <tr>
+                                            <td class="leftHeader">Fraction 3</td>
+                                            <td>${returnPinClass(pinInfo.fracavailability.frac3_av)}</td>
+                                         </tr>
+                                         <tr>
+                                            <td class="leftHeader">Fraction 4</td>
+                                            <td>${returnPinClass(pinInfo.fracavailability.frac4_av)}</td>
+                                         </tr>
+                                         <tr>
+                                            <td class="leftHeader">Fraction 5</td>
+                                            <td>${returnPinClass(pinInfo.fracavailability.frac5_av)}</td>
+                                         </tr>
+                                         <tr>
+                                            <td class="leftHeader">Fraction 6</td>
+                                            <td>${returnPinClass(pinInfo.fracavailability.frac6_av)}</td>
+                                         </tr>
+                                         <tr>
+                                            <td class="leftHeader">Summer</td>
+                                            <td>${returnPinClass(pinInfo.fracavailability.summer_season)}</td>
+                                         </tr>
+                                         <tr>
+                                            <td class="leftHeader">Winter</td>
+                                            <td>${returnPinClass(pinInfo.fracavailability.winter_season)}</td>
+                                         </tr>
+                                         <tr>
+                                            <td class="leftHeader">Whole</td>
+                                            <td>${returnPinClass(pinInfo.fracavailability.whole_ownership)}</td>
+                                         </tr>
+                                        </table>
                                     </div>
-                                    <div class="fractionalDiv">
-                                        <a href="${pinInfo.pdf_file}" target="_blank" aria-label="Download PDF">Download PDF</a>
+                                    <div class="infoBlock">
+                                        ${pinInfo.popup_content}
+                                    </div>
+                                    <div class="pdfDiv">
+                                        <a href="${pinInfo.pdf_file}" target="_blank" aria-label="Download PDF" class="pdfButton">Download PDF</a>
                                     </div>
                                 </div>
                             </div> 

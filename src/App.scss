@@ -1,3 +1,45 @@
+.pdfDiv{
+
+}
+
+.infoBlock{
+
+}
+.contentBlockGrid{
+    display: flex;
+  justify-content: space-evenly;
+}
+
+.contentBlockGrid .pdfButton{
+  background: darkred;
+  padding: 25px;
+  text-transform: uppercase;
+  color: white;
+  border: 2px solid black;
+  transition: 0.3s ease-in-out;
+}
+
+.contentBlockGrid .pdfButton:hover{
+  opacity:0.8;
+}
+
+.availabilityBlock .invisible {
+  border: none;
+  background-color:transparent;
+}
+
+.availabilityBlock table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.availabilityBlock td, .availabilityBlock th {
+  border: 1px solid #857676;
+  text-align: center;
+  padding: 8px;
+}
+.availabilityBlock tr:hover {background-color: coral;}
 
 .cms-react-boilerplate__container{
   text-align: center;
