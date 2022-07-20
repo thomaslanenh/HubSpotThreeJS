@@ -119,14 +119,6 @@ function App({moduleData}) {
                                             <td>${returnPinClass(pinInfo.fracavailability.frac6_av)}</td>
                                          </tr>
                                          <tr>
-                                            <td class="leftHeader">Summer</td>
-                                            <td>${returnPinClass(pinInfo.fracavailability.summer_season)}</td>
-                                         </tr>
-                                         <tr>
-                                            <td class="leftHeader">Winter</td>
-                                            <td>${returnPinClass(pinInfo.fracavailability.winter_season)}</td>
-                                         </tr>
-                                         <tr>
                                             <td class="leftHeader">Whole</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.whole_ownership)}</td>
                                          </tr>
@@ -136,7 +128,7 @@ function App({moduleData}) {
                                         ${pinInfo.popup_content}
                                     </div>
                                     <div class="pdfDiv">
-                                        <a href="${pinInfo.pdf_file}" target="_blank" aria-label="Download PDF" class="pdfButton">Download PDF</a>
+                                        <a href="${pinInfo.pdf_file}" target="_blank" aria-label="Download PDF" class="pdfButton"><img class="downloadImage" src="https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/Custom%20Module%20Requirements/FLOOR-PLAN-THUMB.jpg" alt="Download Floor Plan"/></a>
                                     </div>
                                 </div>
                             </div> 
