@@ -128,7 +128,9 @@ function App({moduleData}) {
                                         ${pinInfo.popup_content}
                                     </div>
                                     <div class="pdfDiv">
-                                        <a href="${pinInfo.pdf_file}" target="_blank" aria-label="Download PDF" class="pdfButton"><img class="downloadImage" src="https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/Custom%20Module%20Requirements/FLOOR-PLAN-THUMB.jpg" alt="Download Floor Plan"/></a>
+                                        <a href="${pinInfo.pdf_file}" target="_blank" aria-label="Download PDF"><img class="downloadImage" src="https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/Custom%20Module%20Requirements/FLOOR-PLAN-THUMB.jpg" alt="Download Floor Plan"/></a>
+                                        <br/>
+                                        <a style="margin-top: 15px" class="cta-primary" target="_blank" href="https://2822935.fs1.hubspotusercontent-na1.net/hubfs/2822935/Riverwalk_FractionalCalendar_2022-2034-web.pdf" aria-label="Link to Fractional Calendar">Link to Fractional Calendar</a>
                                     </div>
                                 </div>
                             </div> 

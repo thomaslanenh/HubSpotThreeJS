@@ -12,6 +12,7 @@ const hubspotConfig = ({ portal, autoupload } = {}) => {
       'main': './src/index.js'
     },
     output: {
+      hashFunction: "sha256",
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].js',
     },
@@ -56,7 +57,7 @@ const hubspotConfig = ({ portal, autoupload } = {}) => {
         portal,
         autoupload,
         src: 'dist',
-        dest: 'cms-react-boilerplate',
+        dest: 'Interactive Floorplan',
       }),
       new MiniCssExtractPlugin({
         filename: '[name].css',
