@@ -65,6 +65,14 @@
           "children": [
             {
               "type": "choice",
+              "name": "hide_row",
+              "label": "Hide Sold Rows",
+              "choices": [["hide", "Yes"], ["show", "No"]],
+              "default": "show",
+              "display": "radio"
+            },
+            {
+              "type": "choice",
               "name": "whole_ownership",
               "label": "Whole Ownership",
               "choices": [["sold", "Sold"], ["available", "Available"]],
@@ -229,6 +237,14 @@
             "label": "Fractional Availability",
             "expanded": false,
             "children": [
+              {
+                "type": "choice",
+                "name": "hide_row",
+                "label": "Hide Sold Rows",
+                "choices": [["hide", "Yes"], ["show", "No"]],
+                "default": "show",
+                "display": "radio"
+              },
               {
                 "type": "choice",
                 "name": "whole_ownership",
@@ -397,6 +413,14 @@
             "children": [
               {
                 "type": "choice",
+                "name": "hide_row",
+                "label": "Hide Sold Rows",
+                "choices": [["hide", "Yes"], ["show", "No"]],
+                "default": "show",
+                "display": "radio"
+              },
+              {
+                "type": "choice",
                 "name": "whole_ownership",
                 "label": "Whole Ownership",
                 "choices": [["sold", "Sold"], ["available", "Available"]],
@@ -561,6 +585,14 @@
             "label": "Fractional Availability",
             "expanded": false,
             "children": [
+              {
+                "type": "choice",
+                "name": "hide_row",
+                "label": "Hide Sold Rows",
+                "choices": [["hide", "Yes"], ["show", "No"]],
+                "default": "show",
+                "display": "radio"
+              },
               {
                 "type": "choice",
                 "name": "whole_ownership",

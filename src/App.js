@@ -94,31 +94,31 @@ function App({moduleData}) {
                                             <th class="invisible"></th>
                                             <th>Availability</th>
                                         </tr>
-                                        <tr>
+                                        <tr class="${pinInfo.fracavailability.hide_row === "hide" && pinInfo.fracavailability.frac1_av !== "available" ? 'hideRow' : null}">
                                             <td class="leftHeader">Fraction 1</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.frac1_av)}</td>
                                          </tr>
-                                         <tr>
+                                         <tr class="${pinInfo.fracavailability.hide_row === "hide" && pinInfo.fracavailability.frac2_av !== "available" ? 'hideRow' : null}">
                                             <td class="leftHeader">Fraction 2</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.frac2_av)}</td>
                                          </tr>
-                                         <tr>
+                                         <tr class="${pinInfo.fracavailability.hide_row === "hide" && pinInfo.fracavailability.frac3_av !== "available" ? 'hideRow' : null}">
                                             <td class="leftHeader">Fraction 3</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.frac3_av)}</td>
                                          </tr>
-                                         <tr>
+                                         <tr class="${pinInfo.fracavailability.hide_row === "hide" && pinInfo.fracavailability.frac4_av !== "available" ? 'hideRow' : null}">
                                             <td class="leftHeader">Fraction 4</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.frac4_av)}</td>
                                          </tr>
-                                         <tr>
+                                         <tr class="${pinInfo.fracavailability.hide_row === "hide" && pinInfo.fracavailability.frac5_av !== "available" ? 'hideRow' : null}">
                                             <td class="leftHeader">Fraction 5</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.frac5_av)}</td>
                                          </tr>
-                                         <tr>
+                                         <tr class="${pinInfo.fracavailability.hide_row === "hide" && pinInfo.fracavailability.frac6_av !== "available" ? 'hideRow' : null}">
                                             <td class="leftHeader">Fraction 6</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.frac6_av)}</td>
                                          </tr>
-                                         <tr>
+                                         <tr class="${pinInfo.fracavailability.hide_row === "hide" && pinInfo.fracavailability.frac7_av !== "available" ? 'hideRow' : null}">
                                             <td class="leftHeader">Whole</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.whole_ownership)}</td>
                                          </tr>
