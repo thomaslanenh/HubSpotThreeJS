@@ -118,7 +118,7 @@ function App({moduleData}) {
                                             <td class="leftHeader">Fraction 6</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.frac6_av)}</td>
                                          </tr>
-                                         <tr class="${pinInfo.fracavailability.hide_row === "hide" && pinInfo.fracavailability.frac7_av !== "available" ? 'hideRow' : null}">
+                                         <tr class="${pinInfo.fracavailability.hide_row === "hide" && pinInfo.fracavailability.whole_ownership !== "available" ? 'hideRow' : null}">
                                             <td class="leftHeader">Whole</td>
                                             <td>${returnPinClass(pinInfo.fracavailability.whole_ownership)}</td>
                                          </tr>
